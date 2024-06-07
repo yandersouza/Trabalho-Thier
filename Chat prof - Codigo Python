@@ -1,0 +1,44 @@
+from tkinter import *
+import random
+
+# Lista de alunos
+alunos = ["Maria", "João", "Pedro", "Ana"]
+
+# Simulando a resposta do aluno
+def resposta_aluno():
+    respostas = ["Ok, entendi!", "Não entendi, pode explicar?", "Preciso de mais exemplos!", "Obrigado, professor!"]
+    resposta_aleatoria = random.choice(respostas)
+    chat_area.insert(INSERT, f"Aluno: {resposta_aleatoria}\n")
+
+# Selecionando um aluno
+def selecionar_aluno(nome_aluno):
+    chat_area.delete(0.0, END)
+    titulo_chat.config(text=f"Chat com {nome_aluno}")
+
+# Interface gráfica principal
+janela = Tk()
+janela.title("Chat Interativo Professor-Aluno")
+
+# Lista de alunos com estilo
+lista_alunos = Listbox(janela, bg="#F2F2F2", selectmode=SINGLE, font=("Arial", 12))
+for aluno in alunos:
+    lista_alunos.insert(END, aluno)
+lista_alunos.pack(side=RIGHT, fill=Y)
+
+# Área de chat com destaque
+chat_area = Text(janela, width=50, height=15, bg="#FFF", font=("Arial", 12))
+chat_area.pack(side=RIGHT, fill=BOTH, expand=True)
+
+# Botão de enviar com um toque de cor
+botao_enviar = Button(janela, text="Enviar", command=resposta_aluno, bg="#0099FF", fg="#FFF")
+botao_enviar.pack(side=RIGHT, padx=10, pady=10)
+
+# Título do chat com personalidade
+titulo_chat = Label(janela, text="Selecione um aluno para iniciar o chat", font=("Arial", 14, "bold"))
+titulo_chat.pack(side=TOP, pady=10)
+
+# Vinculando a seleção de aluno
+lista_alunos.bind("<Button-1>", selecionar_aluno)
+
+# Executando o loop principal
+janela.mainloop()
